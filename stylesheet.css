@@ -52,8 +52,10 @@ body{
  
   background-color: rgb(112, 112, 112);
 
-}.box1,.box2,.box3,.box4,.box5,.box6,.box7,.box8,.box9{
-  
+}.box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgb(164, 164, 164);
   height: 100px;
 
@@ -64,6 +66,10 @@ body{
   row-gap: 4px;
   column-gap: 4px;
   justify-content: center;
-}.box1:hover , .box2:hover , .box3:hover , .box4:hover  ,.box5:hover ,.box6:hover ,.box7:hover ,.box8:hover  ,.box9:hover{
+}.box:hover{
   background-color: rgb(185, 162, 162);
+
+}.box-sign{
+  font-size: 3em;
+  
 }
