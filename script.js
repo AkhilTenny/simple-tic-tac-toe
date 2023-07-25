@@ -11,28 +11,13 @@ const valuesNeeded = (()=>{
    ]
    const PlayerX = "X";
    const PlayerO = "O";
-   const playerXOrganizer = [
-    "","","","","","","","",""
- ];
-  const playerOOrganizer = [
-  "","","","","","","","",""
-];
+  
    var   chanceCount =1 ;
 
    const addCount = ()=>{
     chanceCount +=1;
    }
-   const organizer = ()=>{
-    
-    for(let i=0;i<=gameboard.length;i++){
-      if(gameboard[i] == PlayerX){
-        playerXOrganizer[i] = PlayerX;
-      }else if(gameboard[i] == PlayerO ){
-        playerOOrganizer[i] = PlayerO
-      }
-    }
-    
-   }
+   
    
    const findPlayer = ()=>{
     
@@ -81,16 +66,31 @@ const valuesNeeded = (()=>{
         }
       
    }
+ 
+   function reset(){
+    for(let i=0;i<gameboard.length;i++){
+      gameboard[i]="";
+    }
+   const everyBox = document.querySelectorAll('.box');
+   everyBox.forEach((box)=>{
+    box.innerHTML = ""
+   })
+   document.querySelector("#winnerStatus").innerHTML = "";
+
+   }
+
    function playerXWon(){
     document.querySelector("#winnerStatus").innerHTML = "<h1>X won</h1>"
    }function playerOWon(){
     document.querySelector("#winnerStatus").innerHTML = "<h1>O won</h1>"
    }
    function checkFree(index){
-    
+    if(gameboard[index] != ''){
+      return true;
+    }
    }
    
-  return {gameboard,findPlayer,checkWinner,chanceCount,addCount,organizer,checkFree} 
+  return {gameboard,findPlayer,checkWinner,chanceCount,addCount,checkFree,reset} 
 }
 )()
 
@@ -100,19 +100,24 @@ const displayChanges = (()=>{
   boxes.forEach((box,index,nodeIndex) =>{
     box.addEventListener('click',()=>{
        
+      if(valuesNeeded.checkFree(index)){
+        alert("try another box");
+        return; }
+
       valuesNeeded.gameboard[index] = valuesNeeded.findPlayer();
       box.innerHTML = `<h1 class="box-sign">${valuesNeeded.findPlayer()}</h1>`;
       
       valuesNeeded.addCount();
-      valuesNeeded.organizer();
-      valuesNeeded.checkFree(index);
       valuesNeeded.checkWinner();
+      console.log(valuesNeeded.gameboard);
 
       
 
       } )
   })
-
+   document.querySelector('.butn-reset').addEventListener('click',()=>{
+    valuesNeeded.reset();
+   })
   
 
 })()

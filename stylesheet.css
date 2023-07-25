@@ -27,7 +27,7 @@ body{
   margin: 0;
 
 }.for-winner{
-  background-color: red;
+  background-color: rgb(97, 96, 96);
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -49,7 +49,10 @@ body{
  }.for-game-area{
   width: 100vw;
   height: 100%;
- 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
   background-color: rgb(112, 112, 112);
 
 }.box{
@@ -72,4 +75,12 @@ body{
 }.box-sign{
   font-size: 3em;
   
+}.butn-reset{
+  color: rgb(255, 255, 255);
+  background-color: rgb(57, 57, 57);
+  border:0;
+  font-size: 1.5rem;
+  width: 100px;
+  height: 30px;
+  margin-top:10px ;
 }
