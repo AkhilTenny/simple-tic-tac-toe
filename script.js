@@ -1,14 +1,43 @@
 const valuesNeeded = (()=>{
-   const playerX = "X";
+   const winnerCombinations =[
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+   ]
+   const PlayerX = "X";
    const PlayerO = "O";
-   var   chanceCount = 1 ;
+   const playerXOrganizer = [
+    "","","","","","","","",""
+ ];
+  const playerOOrganizer = [
+  "","","","","","","","",""
+];
+   var   chanceCount =1 ;
+
+   const addCount = ()=>{
+    chanceCount +=1;
+   }
+   const organizer = ()=>{
+    
+    for(let i=0;i<=gameboard.length;i++){
+      if(gameboard[i] == PlayerX){
+        playerXOrganizer[i] = PlayerX;
+      }else if(gameboard[i] == PlayerO ){
+        playerOOrganizer[i] = PlayerO
+      }
+    }
+    
+   }
    
    const findPlayer = ()=>{
     
-    chanceCount +=1;
-    
     if(chanceCount % 2 == 0){
-     return playerX;
+     return PlayerX;
    }else{
       return PlayerO;
     }
@@ -17,18 +46,51 @@ const valuesNeeded = (()=>{
    var gameboard = [
       "","","","","","","","",""
    ];
-   const endGame = ()=>{
-    if (chanceCount > 9){
-      document.querySelector("#winnerStatus").innerHTML = "its a draw";
-      
-      
-    }else if(
-      gameboard[0] == "playerX" && gameboard[1] == "playerX" && gameboard[2] == "playerX" ){ 
-     
-        document.querySelector("#winnerStatus").innerHTML = "X is the Winner";
+   const checkWinner = ()=>{
+    
+    const winConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for(let i=0;i<winConditions.length;i++){
+      let winCount =0;
+      for(let j=0;j<3;j++){
+      if(gameboard[winConditions[i][j]] == PlayerX){
+      winCount +=1;
+       if(winCount == 3){
+        playerXWon();
+       }
+      }
     }
+      }for(let i=0;i<winConditions.length;i++){
+        let winCount =0;
+        for(let j=0;j<3;j++){
+        if(gameboard[winConditions[i][j]] == PlayerO){
+        winCount +=1;
+         if(winCount == 3){
+          playerOWon();
+         }
+        }
+      }
+        }
+      
    }
-  return {gameboard,findPlayer,endGame} 
+   function playerXWon(){
+    document.querySelector("#winnerStatus").innerHTML = "<h1>X won</h1>"
+   }function playerOWon(){
+    document.querySelector("#winnerStatus").innerHTML = "<h1>O won</h1>"
+   }
+   function checkFree(index){
+    
+   }
+   
+  return {gameboard,findPlayer,checkWinner,chanceCount,addCount,organizer,checkFree} 
 }
 )()
 
@@ -38,15 +100,20 @@ const displayChanges = (()=>{
   boxes.forEach((box,index,nodeIndex) =>{
     box.addEventListener('click',()=>{
        
-       
-    
+      valuesNeeded.gameboard[index] = valuesNeeded.findPlayer();
       box.innerHTML = `<h1 class="box-sign">${valuesNeeded.findPlayer()}</h1>`;
-      valuesNeeded.endGame();
+      
+      valuesNeeded.addCount();
+      valuesNeeded.organizer();
+      valuesNeeded.checkFree(index);
+      valuesNeeded.checkWinner();
+
+      
 
       } )
   })
 
-
+  
 
 })()
 
